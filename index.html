@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>JSON Assignment</title>
+</head>
+<body>
+	<h1>Cover Band Set List</h1>
+
+<label for="search">Filter by genre: </label>
+	<select id="search">
+		<option value="All">All</option>
+		<option value="Rock">Rock</option>
+		<option value="Rap">Rap</option>
+		<option value="Country">Country</option>
+		<option value="Hip Hop">Hip Hop</option>
+		<option value="Television">Television</option>
+	</select>
+	<button onclick="filter()">Filter</button>
+
+	<div id = "list"></div>
+
+	<script src="setlist.js"></script>
+	<br><br><br>
+	<script>
+		let list = document.createDocumentFragment();
+
+		for(let i = 0; i < setlist.songs.length; i++){
+		    let newSong = document.createElement('div');
+		    newSong.className = 'song';
+		    newSong.innerHTML = makeSong(i);
+		    list.appendChild(newSong);
+		}
+		document.getElementById("list").appendChild(list);
+
+
+		function filter(){
+			let filtered = document.createDocumentFragment();
+			var filter = search.options[search.selectedIndex];
+			document.getElementById("list").innerHTML = '';
+			if (filter.value != "All"){
+				for (i = 0; i < 10; i++){
+					if (setlist.songs[i].genre == filter.value){
+						let newSong = document.createElement('div');
+						newSong.className = 'song';
+						newSong.innerHTML = makeSong(i);
+						filtered.appendChild(newSong);
+					}
+				}
+				document.getElementById("list").appendChild(filtered);
+			}
+			else{
+				for (i = 0; i < 10; i++){
+					let newSong = document.createElement('div');
+					newSong.className = 'song';
+					newSong.innerHTML = makeSong(i);
+					filtered.appendChild(newSong);
+				}
+				document.getElementById("list").appendChild(filtered);
+			}
+		}
+		function makeSong(i){
+			let song = setlist.songs[i];
+			var name = setlist.songs[i].name;
+			var artist = setlist.songs[i].artist;
+			var genre = setlist.songs[i].genre;
+			var year = setlist.songs[i].year;
+			let songHTML = ` <strong> ${name} </strong> <br />
+			                     Artist: ${artist} <br />
+			                     Genre: ${genre} <br />
+			                     Year: ${year} <br><br />
+			               `
+			return songHTML;
+		}
+
+	</script>
+
+	
+</body>
+</html>
